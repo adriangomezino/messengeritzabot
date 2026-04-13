@@ -44,7 +44,7 @@ app.add_middleware(
 # Variables de entorno
 META_VERIFY_TOKEN = os.getenv("META_VERIFY_TOKEN")
 # Token de página hardcodeado (bug Railway con variables)
-META_PAGE_ACCESS_TOKEN = "EAANYpgP97mwBRLQAm8t1aPceq6mk8KpZAFx0cJeTpKO1fOH7zCsIC316ykUgsP1rzpAhdxBreGpe6ky5OHDZAYvn53asH26XR6SBZCvJbZCWilMFT4Bq6tiFulDmrDVkjST54revJZAF7V81u9QqKkeAh4iyIH5dIxL3aCXpxXnwaKPiLUSTxZCGKFd1TZCDO7Kiw0z9up3"
+META_PAGE_ACCESS_TOKEN = "EAAfaZCymXmgcBRN35Ewme9ZCZCGCDhVfNNZCr4cVWUQsZClWZBf9bAZCgrbU7xgX0FYWZCfy390XEAwEisAUsYpZBtNZA0SYUwe75HYZA2ZAMRtzZAtEosxMXccVKGlRxYhjfM2F9mouQx150oe3dVIxijp74PxCr0ZAFPQBBk7mFpPqTfEeXQQixXndRQ0wsxWKcJRZBNEUrHqG3RNlsTwBtZBV18cbgOcv1xxhkMlHkZBaAiKGrhwZDZD"
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENCLAW_API_URL = os.getenv("OPENCLAW_API_URL", "https://server.itzamnaenergia.com")
 PORT = int(os.getenv("PORT", 8000))
