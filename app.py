@@ -70,6 +70,12 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint para monitoreo."""
+    # Debug: mostrar valor REAL de META_PAGE_ACCESS_TOKEN
+    page_token_value = os.getenv("META_PAGE_ACCESS_TOKEN")
+    page_token_debug = "SET" if page_token_value else "NOT SET"
+    
+    logger.info(f"Health check: META_PAGE_ACCESS_TOKEN={page_token_debug}")
+    
     # Verificar configuraciones básicas
     checks = {
         "meta_verify_token_configured": bool(META_VERIFY_TOKEN),
@@ -85,6 +91,10 @@ async def health_check():
         "status": "healthy" if all_healthy else "degraded",
         "checks": checks,
         "timestamp": datetime.now().isoformat(),
+        "debug": {
+            "META_PAGE_ACCESS_TOKEN_env": page_token_debug,
+            "META_PAGE_ACCESS_TOKEN_len": len(page_token_value) if page_token_value else 0
+        }
     }
 
 
