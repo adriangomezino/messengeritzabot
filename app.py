@@ -305,6 +305,13 @@ async def get_config():
     """
     Endpoint para ver la configuración actual (sin valores sensibles).
     """
+    # Debug: mostrar todas las variables disponibles
+    all_env_vars = {k: "***" if "TOKEN" in k or "KEY" in k else v 
+                    for k, v in os.environ.items() 
+                    if "META" in k or "OPEN" in k or "PORT" in k}
+    
+    logger.info(f"Variables de entorno disponibles: {all_env_vars}")
+    
     return {
         "meta_verify_token_configured": bool(META_VERIFY_TOKEN),
         "meta_page_token_configured": bool(META_PAGE_ACCESS_TOKEN),
@@ -314,6 +321,7 @@ async def get_config():
         "port": PORT,
         "debug": os.getenv("DEBUG", "False").lower() == "true",
         "timestamp": datetime.now().isoformat(),
+        "env_vars_debug": all_env_vars
     }
 
 
