@@ -91,16 +91,16 @@ async def health_check():
 @app.get("/webhook")
 async def verify_webhook(
     request: Request,
-    mode: Optional[str] = None,
-    token: Optional[str] = None,
-    challenge: Optional[str] = None
+    hub_mode: Optional[str] = None,
+    hub_verify_token: Optional[str] = None,
+    hub_challenge: Optional[str] = None
 ):
     """
     Endpoint para verificación del webhook de Meta.
     
     Meta envía una solicitud GET para verificar el webhook durante la configuración.
     """
-    logger.info(f"Verificacion webhook: mode={mode}, token={token}, expected={META_VERIFY_TOKEN}")
+    logger.info(f"Verificacion webhook: hub_mode={hub_mode}, hub_verify_token={hub_verify_token}, expected={META_VERIFY_TOKEN}")
     
     if not META_VERIFY_TOKEN:
         raise HTTPException(
@@ -108,11 +108,11 @@ async def verify_webhook(
             detail="META_VERIFY_TOKEN no configurado"
         )
     
-    if mode == "subscribe" and token == META_VERIFY_TOKEN:
+    if hub_mode == "subscribe" and hub_verify_token == META_VERIFY_TOKEN:
         logger.info("Webhook verificado exitosamente")
-        return PlainTextResponse(challenge)
+        return PlainTextResponse(hub_challenge)
     else:
-        logger.warning(f"Fallo verificacion webhook: mode={mode}, token={token}, expected={META_VERIFY_TOKEN}")
+        logger.warning(f"Fallo verificacion webhook: hub_mode={hub_mode}, hub_verify_token={hub_verify_token}, expected={META_VERIFY_TOKEN}")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Verificacion fallida"
