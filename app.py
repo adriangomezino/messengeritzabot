@@ -112,10 +112,10 @@ async def verify_webhook(
         logger.info("Webhook verificado exitosamente")
         return PlainTextResponse(challenge)
     else:
-        logger.warning(f"Fallo verificación webhook: mode={mode}, token={token}")
+        logger.warning(f"Fallo verificacion webhook: mode={mode}, token={token}")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Verificación fallida"
+            detail="Verificacion fallida"
         )
 
 
