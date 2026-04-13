@@ -45,6 +45,7 @@ app.add_middleware(
 META_VERIFY_TOKEN = os.getenv("META_VERIFY_TOKEN")
 # Intentar múltiples nombres para el token de página (bug Railway)
 META_PAGE_ACCESS_TOKEN = os.getenv("META_PAGE_ACCESS_TOKEN") or \
+                         os.getenv("META_PAGE_TOKEN") or \
                          os.getenv("FB_PAGE_TOKEN") or \
                          os.getenv("FACEBOOK_PAGE_TOKEN") or \
                          os.getenv("FB_PAGE_ACCESS_TOKEN")
@@ -76,12 +77,15 @@ async def health_check():
     """Health check endpoint para monitoreo."""
     # Debug: mostrar valor REAL de META_PAGE_ACCESS_TOKEN
     page_token_value = os.getenv("META_PAGE_ACCESS_TOKEN") or \
+                      os.getenv("META_PAGE_TOKEN") or \
                       os.getenv("FB_PAGE_TOKEN") or \
                       os.getenv("FACEBOOK_PAGE_TOKEN") or \
                       os.getenv("FB_PAGE_ACCESS_TOKEN")
     page_token_debug = "SET" if page_token_value else "NOT SET"
     
-    logger.info(f"Health check: page_token={page_token_debug}, env_vars={dict(os.environ)}")
+    # Solo loguear nombres de variables (no valores)
+    env_var_names = [k for k in os.environ.keys() if "TOKEN" in k or "KEY" in k or "PAGE" in k or "FB" in k]
+    logger.info(f"Health check: page_token={page_token_debug}, relevant_vars={env_var_names}")
     
     # Verificar configuraciones básicas
     checks = {
