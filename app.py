@@ -43,12 +43,8 @@ app.add_middleware(
 
 # Variables de entorno
 META_VERIFY_TOKEN = os.getenv("META_VERIFY_TOKEN")
-# Intentar múltiples nombres para el token de página (bug Railway)
-META_PAGE_ACCESS_TOKEN = os.getenv("META_PAGE_ACCESS_TOKEN") or \
-                         os.getenv("META_PAGE_TOKEN") or \
-                         os.getenv("FB_PAGE_TOKEN") or \
-                         os.getenv("FACEBOOK_PAGE_TOKEN") or \
-                         os.getenv("FB_PAGE_ACCESS_TOKEN")
+# Token de página hardcodeado (bug Railway con variables)
+META_PAGE_ACCESS_TOKEN = "EAANYpgP97mwBRMDoqwBF44sMFXh2LzWXIA6HqtZAMrWFvSVrZBJeSaOEZAwmZBeLZCRwERlNVZBeHyJDpCdrxL5i3RGt8p24DhEhmAfr91gCnkrjpaOWZCMfDZAqxvR1htoX0ypdN5HwGKEtcFjrDersoCG9a3K4YEEb0IybKpP7P4uxHaXPCoAhZCbPtYcXW"
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENCLAW_API_URL = os.getenv("OPENCLAW_API_URL", "https://server.itzamnaenergia.com")
 PORT = int(os.getenv("PORT", 8000))
@@ -76,12 +72,8 @@ async def root():
 async def health_check():
     """Health check endpoint para monitoreo."""
     # Debug: mostrar valor REAL de META_PAGE_ACCESS_TOKEN
-    page_token_value = os.getenv("META_PAGE_ACCESS_TOKEN") or \
-                      os.getenv("META_PAGE_TOKEN") or \
-                      os.getenv("FB_PAGE_TOKEN") or \
-                      os.getenv("FACEBOOK_PAGE_TOKEN") or \
-                      os.getenv("FB_PAGE_ACCESS_TOKEN")
-    page_token_debug = "SET" if page_token_value else "NOT SET"
+    page_token_value = META_PAGE_ACCESS_TOKEN
+    page_token_debug = "HARDCODED" if page_token_value else "NOT SET"
     
     # Solo loguear nombres de variables (no valores)
     env_var_names = [k for k in os.environ.keys() if "TOKEN" in k or "KEY" in k or "PAGE" in k or "FB" in k]
