@@ -10,7 +10,7 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 
 import httpx
-from fastapi import FastAPI, Request, HTTPException, status
+from fastapi import FastAPI, Request, HTTPException, status, Query
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -91,9 +91,9 @@ async def health_check():
 @app.get("/webhook")
 async def verify_webhook(
     request: Request,
-    hub_mode: Optional[str] = None,
-    hub_verify_token: Optional[str] = None,
-    hub_challenge: Optional[str] = None
+    hub_mode: Optional[str] = Query(None, alias="hub.mode"),
+    hub_verify_token: Optional[str] = Query(None, alias="hub.verify_token"),
+    hub_challenge: Optional[str] = Query(None, alias="hub.challenge")
 ):
     """
     Endpoint para verificación del webhook de Meta.
