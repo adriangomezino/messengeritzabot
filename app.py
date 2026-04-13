@@ -43,7 +43,11 @@ app.add_middleware(
 
 # Variables de entorno
 META_VERIFY_TOKEN = os.getenv("META_VERIFY_TOKEN")
-META_PAGE_ACCESS_TOKEN = os.getenv("META_PAGE_ACCESS_TOKEN")
+# Intentar múltiples nombres para el token de página (bug Railway)
+META_PAGE_ACCESS_TOKEN = os.getenv("META_PAGE_ACCESS_TOKEN") or \
+                         os.getenv("FB_PAGE_TOKEN") or \
+                         os.getenv("FACEBOOK_PAGE_TOKEN") or \
+                         os.getenv("FB_PAGE_ACCESS_TOKEN")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENCLAW_API_URL = os.getenv("OPENCLAW_API_URL", "https://server.itzamnaenergia.com")
 PORT = int(os.getenv("PORT", 8000))
@@ -71,10 +75,13 @@ async def root():
 async def health_check():
     """Health check endpoint para monitoreo."""
     # Debug: mostrar valor REAL de META_PAGE_ACCESS_TOKEN
-    page_token_value = os.getenv("META_PAGE_ACCESS_TOKEN")
+    page_token_value = os.getenv("META_PAGE_ACCESS_TOKEN") or \
+                      os.getenv("FB_PAGE_TOKEN") or \
+                      os.getenv("FACEBOOK_PAGE_TOKEN") or \
+                      os.getenv("FB_PAGE_ACCESS_TOKEN")
     page_token_debug = "SET" if page_token_value else "NOT SET"
     
-    logger.info(f"Health check: META_PAGE_ACCESS_TOKEN={page_token_debug}")
+    logger.info(f"Health check: page_token={page_token_debug}, env_vars={dict(os.environ)}")
     
     # Verificar configuraciones básicas
     checks = {
