@@ -100,7 +100,7 @@ async def verify_webhook(
     
     Meta envía una solicitud GET para verificar el webhook durante la configuración.
     """
-    logger.info(f"Verificación webhook: mode={mode}, token={token}")
+    logger.info(f"Verificacion webhook: mode={mode}, token={token}, expected={META_VERIFY_TOKEN}")
     
     if not META_VERIFY_TOKEN:
         raise HTTPException(
@@ -112,7 +112,7 @@ async def verify_webhook(
         logger.info("Webhook verificado exitosamente")
         return PlainTextResponse(challenge)
     else:
-        logger.warning(f"Fallo verificacion webhook: mode={mode}, token={token}")
+        logger.warning(f"Fallo verificacion webhook: mode={mode}, token={token}, expected={META_VERIFY_TOKEN}")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Verificacion fallida"
